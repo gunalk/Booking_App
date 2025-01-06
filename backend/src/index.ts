@@ -27,7 +27,7 @@ app.use(express.json());
 
 // Middleware to parse incoming URL-encoded data
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/users",UserRoutes)
+app.use("/api/user",UserRoutes)
 app.use("/api/auth",authRoutes)
 // Basic route
 app.get('/', (req: Request, res: Response) => {

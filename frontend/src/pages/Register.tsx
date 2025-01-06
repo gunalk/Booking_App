@@ -1,7 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
-interface RegisterFormData {
+import * as apiClient from "../api-client"
+import { useMutation } from "react-query";
+import { formInput, formLabel, textError } from "@/utilities/commonCss";
+import { useAppContext } from "@/contexts/AppContext";
+ export interface RegisterFormData {
   firstName: string;
   lastName: string;
   email: string;
@@ -11,12 +14,22 @@ interface RegisterFormData {
 
 const Register = () => {
   const { register,watch,handleSubmit,formState:{errors} } = useForm<RegisterFormData>();
-  const onSubmit =handleSubmit((data)=>{
-    console.log(data)
+  const {showToast}=useAppContext()
+  const mutation=useMutation(apiClient.register,{
+    onSuccess: async (data) => {
+      console.log("User registered successfully", data);
+      showToast({message:"User registered successfully",type:"SUCCESS"})
+      // Redirect to the login page
+      // history.push("/login");
+    },
+    onError: (error:Error) => {
+      showToast({message:error?.message,type:"ERROR"})
+    },
   })
-  const formLabel = "text-gray-700 text-sm font-bold flex-1";
-  const formInput = "border rounded w-full py-1 px-2 font-normal";
-  const textError ="text-red-500 font-light text-sm "
+  const onSubmit =handleSubmit((data)=>{
+   mutation.mutate(data)
+  })
+  
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <h2 className="text-2xl font-bold">Create An Account</h2>
