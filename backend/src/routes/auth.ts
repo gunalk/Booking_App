@@ -3,6 +3,7 @@ import User, { UserType } from "../models/user"; // Import UserType for typing
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import { verifyToken } from "../middleware/auth";
 const router = express.Router();
 
 router.post("/login",[
@@ -57,4 +58,7 @@ if(!isMatch) {
   }
 });
 
+router.get("/validate-token",verifyToken,async(req,res)=>{
+res.status(200).send({userId:req.userId})
+})
 export default router;

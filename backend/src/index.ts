@@ -4,7 +4,9 @@ import 'dotenv/config'
 import UserRoutes from "./routes/user"
 import authRoutes from "./routes/auth"
 import mongoose from 'mongoose';
+import cookieParser from "cookie-parser"
 const app = express();
+app.use(cookieParser())
 const connectDB = async () => {
     try {
       // Connect to MongoDB without specifying useNewUrlParser and useUnifiedTopology
@@ -20,7 +22,10 @@ const connectDB = async () => {
 const port = 3000;
 console.log(process.env.MONGODB_URL )
 // Enable CORS
-app.use(cors()); 
+app.use(cors({
+  origin:process.env.FRONTEND_URL,
+  credentials:true,
+})); 
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());

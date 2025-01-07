@@ -4,6 +4,7 @@ import * as apiClient from "../api-client"
 import { useMutation } from "react-query";
 import { formInput, formLabel, textError } from "@/utilities/commonCss";
 import { useAppContext } from "@/contexts/AppContext";
+import { useNavigate } from "react-router-dom";
  export interface RegisterFormData {
   firstName: string;
   lastName: string;
@@ -15,10 +16,12 @@ import { useAppContext } from "@/contexts/AppContext";
 const Register = () => {
   const { register,watch,handleSubmit,formState:{errors} } = useForm<RegisterFormData>();
   const {showToast}=useAppContext()
+  const navigate=useNavigate()
   const mutation=useMutation(apiClient.register,{
     onSuccess: async (data) => {
       console.log("User registered successfully", data);
       showToast({message:"User registered successfully",type:"SUCCESS"})
+      navigate("/")
       // Redirect to the login page
       // history.push("/login");
     },
