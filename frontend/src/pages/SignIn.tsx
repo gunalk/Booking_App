@@ -10,7 +10,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import * as apiClient from "../api-client"
+import * as apiClient from "../api-client";
 import { useAppContext } from "@/contexts/AppContext";
 export interface SignInFormData {
   email: string;
@@ -22,27 +22,24 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFormData>();
-  const navigate =useNavigate()
-   const {showToast}=useAppContext()
-  const mutation =useMutation(apiClient.signIn,{
+  const navigate = useNavigate();
+  const { showToast } = useAppContext();
+  const mutation = useMutation(apiClient.signIn, {
     onSuccess: async (data) => {
       console.log("User signed in successfully", data);
-      showToast({message:"User Logged in successfully",type:"SUCCESS"})
+      showToast({ message: "User Logged in successfully", type: "SUCCESS" });
       // Redirect to the home page after successful sign in
-      navigate("/")
+      navigate("/");
     },
     onError: (error) => {
       console.error("Error signing in user:", error);
       // Show an error message to the user
       showToast({ message: "Error signing in user", type: "ERROR" });
     },
-  })
-  const onSubmit =handleSubmit((data)=>{
-    mutation.mutate(data)
-   })
-
-
- 
+  });
+  const onSubmit = handleSubmit((data) => {
+    mutation.mutate(data);
+  });
 
   return (
     <form className={FormWrapper} onSubmit={onSubmit}>
@@ -63,7 +60,7 @@ const SignIn = () => {
           Password
           <input
             type="password"
-            className={formInput }
+            className={formInput}
             {...register("password", {
               required: "This field is required",
               minLength: {
@@ -76,10 +73,12 @@ const SignIn = () => {
             <p className={textError}>{errors.password.message}</p>
           )}
         </label>
-        <span> <button type="submit" className={PrimaryBlueButton}>
+        <span>
+          {" "}
+          <button type="submit" className={PrimaryBlueButton}>
             Sign In
-             </button>
-             </span>
+          </button>
+        </span>
       </div>
     </form>
   );
