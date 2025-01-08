@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as apiClient from "../api-client"
 import { useMutation } from "react-query";
-import { formInput, formLabel, textError } from "@/utilities/commonCss";
+import { formInput, formLabel, FormWrapper, heading, PrimaryBlueButton, textError } from "@/utilities/commonCss";
 import { useAppContext } from "@/contexts/AppContext";
 import { useNavigate } from "react-router-dom";
  export interface RegisterFormData {
@@ -34,8 +34,8 @@ const Register = () => {
   })
   
   return (
-    <form className="flex flex-col gap-5" onSubmit={onSubmit}>
-      <h2 className="text-2xl font-bold">Create An Account</h2>
+    <form className={FormWrapper} onSubmit={onSubmit}>
+      <h2 className={heading}>Create An Account</h2>
       <div className="flex flex-col md:flex-row gap-5">
         <label className={formLabel}>
           First Name
@@ -100,7 +100,7 @@ const Register = () => {
           }
         </label>
      
-    <span> <button type="submit" className="bg-blue-600 rounded-lg  text-white px-3 py-2 hover:bg-blue-500 ">
+    <span> <button type="submit" className={PrimaryBlueButton}>
     Create Account
      </button>
      </span>
